@@ -4,3 +4,8 @@
 cabal.sandbox.config
 _*
 dist/
+
+# temporary stuff
+*.bak
+*~
+.*.swp
