@@ -1,7 +1,8 @@
-<ul>
-    $for(posts)$
-        <li>
-            <a href="$url$">$title$</a> - $date$
-        </li>
-    $endfor$
-</ul>
+$for(posts)$
+<section class="post">
+<h3 class="post-title"><a href="$url$">$title$</a></h3>
+<p class="post-meta">Posted on $date$$if(author)$ by $author$$endif$.</p>
+
+<p>foo bar</p>
+</section>
+$endfor$
