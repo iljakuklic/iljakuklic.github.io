@@ -2,7 +2,21 @@
 {-# LANGUAGE OverloadedStrings #-}
 import           Data.Monoid (mappend, mconcat)
 import           Hakyll
+import           Text.Pandoc.Options
 
+pandocReadCfg = defaultHakyllReaderOptions {
+    readerTabStop = 4
+  }
+
+pandocWriteCfg = defaultHakyllWriterOptions {
+    writerTabStop = 4,
+    writerHTMLMathMethod = MathJax "",
+    writerIdentifierPrefix = "h-",
+    writerHtml5 = True,
+    writerHighlight = False
+  }
+
+myPandocCompiler = pandocCompilerWithTransformM pandocReadCfg pandocWriteCfg return
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -21,13 +35,13 @@ main = hakyll $ do
 
     match (fromList ["about.rst", "contact.markdown"]) $ do
         route   $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ myPandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
     match "posts/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ myPandocCompiler
             >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/post.html"    postCtx
             >>= loadAndApplyTemplate "templates/default.html" postCtx
