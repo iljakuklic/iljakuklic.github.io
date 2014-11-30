@@ -1,5 +1,5 @@
 Prism.languages.haskell= {
-	'property': {
+	'pragma': {
 		pattern: /(^|[^-!#$%*+=\?&@|~.:<>^\\])({-#[\w\W]*?#-})/gm,
 		lookbehind: true
 	},
