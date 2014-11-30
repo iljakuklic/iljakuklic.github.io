@@ -13,8 +13,24 @@ a:focus {
     text-decoration: underline;
 }
 
-h7 {
-    font-weight: 100;
+h2, h3, h4, h5, h6 {
+    color: rgb(61, 79, 93);
+}
+
+.post h2, .post h3 {
+    border-bottom: 1px dashed #89a;
+}
+
+p {
+    text-align: justify;
+}
+
+#footer p {
+    text-align: center;
+}
+
+pre {
+    font-size: .85em;
 }
 
 /* LAYOUT CSS */
@@ -35,6 +51,10 @@ h7 {
 
 .sidebar {
     background: rgb(61, 79, 93);
+    color: #fff;
+}
+
+.sidebar a {
     color: #fff;
 }
 
@@ -90,7 +110,7 @@ h7 {
 }
 
 .post {
-    padding-bottom: 2em;
+    margin-bottom: 2em;
 }
 .post-title {
     font-size: 1.5em;
