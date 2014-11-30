@@ -30,7 +30,7 @@ pre[class*="language-"] {
 	position: relative;
 	margin: .5em 0;
 	box-shadow: -1px 0px 0px 0px #358ccb, 0px 0px 0px 1px #dfdfdf;
-	border-left: 10px solid #358ccb;
+	border-left: 3px solid rgb(61, 79, 93);
 	background-color: #fdfdfd;
 	background-image: -webkit-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
 	background-image: -moz-linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
@@ -72,7 +72,6 @@ pre[class*="language-"] {
 	-ms-border-radius: 0.3em;
 	-o-border-radius: 0.3em;
 	border-radius: 0.3em;
-	color: #c92c2c;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
