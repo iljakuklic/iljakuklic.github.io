@@ -83,6 +83,13 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateCompiler
 
+fixupQuotes  ('&':'q':'u':'o':'t':';':rest) = '"' : fixupQuotes  rest
+fixupQuotes  ('<':rest)                     = '<' : fixupQuotes' rest
+fixupQuotes  (chr:rest)                     = chr : fixupQuotes  rest
+fixupQuotes  ""                             = ""
+fixupQuotes' ('>':rest)                     = '>' : fixupQuotes  rest
+fixupQuotes' (chr:rest)                     = chr : fixupQuotes' rest
+fixupQuotes' ""                             = ""
 
 --------------------------------------------------------------------------------
 postCtx :: Context String
