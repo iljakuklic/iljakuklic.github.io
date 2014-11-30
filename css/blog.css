@@ -75,7 +75,7 @@ nav a:focus {
     text-decoration: none;
 }
 
-section.pagepart h2 {
+section.subpages h2 {
     text-transform: uppercase;
     color: #aaa;
     border-bottom: 1px solid #eee;
