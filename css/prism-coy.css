@@ -64,7 +64,9 @@ pre[class*="language-"] {
 /* Inline code */
 :not(pre) > code[class*="language-"] {
 	position: relative;
-	padding: .2em;
+	padding: .1em;
+	display: inline;
+	font-size: .95em;
 	-webkit-border-radius: 0.3em;
 	-moz-border-radius: 0.3em;
 	-ms-border-radius: 0.3em;
@@ -144,17 +146,6 @@ pre[class*="language-"] {
 
 .namespace {
 	opacity: .7;
-}
-
-@media screen and (max-width: 767px) {
-	pre[class*="language-"]:before,
-	pre[class*="language-"]:after {
-		bottom: 14px;
-		-webkit-box-shadow: none;
-		-moz-box-shadow: none;
-		box-shadow: none;
-	}
-
 }
 
 /* Plugin styles */

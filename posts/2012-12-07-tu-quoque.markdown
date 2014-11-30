@@ -15,6 +15,7 @@ mollis quis convallis sem laoreet. Nulla id libero ac erat varius laoreet. Proin
 sed est est. Curabitur lacinia fermentum lorem, elementum malesuada ipsum
 malesuada ut. Donec suscipit elit id leo vehicula mattis non sed leo.^[this is a footnote]
 
+WTF diff `a -> Maybe a`{.lang-haskell}.
 
 ~~~~ lang-haskell
 {-# LANGUAGE NoMonomorphismRestriction #-}
@@ -26,6 +27,8 @@ data Foo a = Yea a | Nope
 
 mapMaybe :: (a -> b) -> (Maybe a -> Maybe b)
 mapMaybe = (<$>)
+
+myFunc = unsafePerformIO explode
 
 -- this is the main
 main :: IO ()
