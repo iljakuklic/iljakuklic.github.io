@@ -3,6 +3,11 @@
 import           Data.Monoid (mappend, mconcat)
 import           Hakyll
 import           Text.Pandoc.Options
+import           Control.Applicative
+
+-------------------------------------------------------------------------------
+
+-- Pandoc config
 
 pandocReadCfg = defaultHakyllReaderOptions {
     readerTabStop = 4
@@ -17,6 +22,9 @@ pandocWriteCfg = defaultHakyllWriterOptions {
   }
 
 myPandocCompiler = pandocCompilerWithTransformM pandocReadCfg pandocWriteCfg return
+
+-- constants
+numPostsOnTitlePage = 3
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -65,7 +73,7 @@ main = hakyll $ do
     match "index.html" $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
+            posts <- take numPostsOnTitlePage <$> (recentFirst =<< loadAll "posts/*")
             let indexCtx =
                     listField "posts" postCtx (return posts) `mappend`
                     constField "title" "Home"                `mappend`
