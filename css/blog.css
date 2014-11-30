@@ -21,12 +21,8 @@ h2, h3, h4, h5, h6 {
     border-bottom: 1px dashed #89a;
 }
 
-p {
+#main p {
     text-align: justify;
-}
-
-#footer p {
-    text-align: center;
 }
 
 pre {
@@ -43,29 +39,28 @@ pre {
     padding: 0;
 }
 
-.header {
+#sidebar header {
     text-align: center;
     top: auto;
     margin: 3em auto;
 }
 
-.sidebar {
+#sidebar {
     background: rgb(61, 79, 93);
     color: #fff;
 }
 
-.sidebar a {
+#sidebar a {
     color: #fff;
 }
 
-.brand-title,
-.brand-tagline {
-    margin: 0;
+#header h1, #header h2 {
+    margin: .2em 0;
 }
-.brand-title {
+#header h1 {
     text-transform: uppercase;
 }
-.brand-tagline {
+#header h2 {
     font-weight: 300;
     color: rgb(176, 202, 219);
 }
@@ -140,18 +135,6 @@ pre {
     background: #999;
     font-size: 80%;
 }
-    .post-category-design {
-        background: #5aba59;
-    }
-    .post-category-pure {
-        background: #4d85d1;
-    }
-    .post-category-yui {
-        background: #8156a7;
-    }
-    .post-category-js {
-        background: #df2d4f;
-    }
 
 .post-images {
     margin: 1em 0;
@@ -163,17 +146,13 @@ pre {
     text-shadow: 0 1px 1px #333;
 }
 
-.footer {
+#footer {
     text-align: center;
     padding: 1em 0;
 }
-.footer {
+footer {
     color: #999;
     font-size: 80%;
-}
-.footer .pure-menu a:hover,
-.footer .pure-menu a:focus {
-    background: none;
 }
 
 @media (min-width: 48em) {
@@ -182,13 +161,13 @@ pre {
         margin-left: 25%;
     }
 
-    .header {
+    #sidebar header {
         margin: 70% 2em 0;
         text-align: right;
         /*padding: 0 1em;*/
     }
 
-    .sidebar {
+    #sidebar {
         position: fixed;
 	background-image: url("/images/brainss.png");
 	background-size: 120%;
