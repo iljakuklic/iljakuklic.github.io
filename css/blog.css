@@ -64,17 +64,6 @@ pre {
     font-weight: 300;
     color: rgb(176, 202, 219);
 }
-
-.nav-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-.nav-item {
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
-}
 nav a {
     background: transparent;
     color: #bcf;
@@ -96,12 +85,12 @@ section.pagepart h2 {
     letter-spacing: 0.1em;
 }
 
-.content {
+#content {
     padding: 2em 1em 0;
 }
 
-.post {
-    margin-bottom: 2em;
+.post-item {
+    margin-bottom: 1.5em;
 }
 .post-item h3 {
     font-size: 1.5em;
@@ -112,14 +101,6 @@ section.pagepart h2 {
     color: #999;
     font-size: 90%;
     margin: 0;
-}
-
-.post-category {
-    margin: 0 0.1em;
-    padding: 0.3em 1em;
-    color: #fff;
-    background: #999;
-    font-size: 80%;
 }
 
 figure {
