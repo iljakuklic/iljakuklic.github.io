@@ -1,8 +1,10 @@
 $for(posts)$
 <section class="post-item">
-<h3 class="post-title"><a href="$url$">$title$</a></h3>
-<p class="post-meta">Posted on $date$$if(author)$ by $author$$endif$.</p>
+  <header>
+    <h3><a href="$url$">$title$</a></h3>
+    <p>Posted on $date$$if(author)$ by $author$$endif$.</p>
+  </header>
 
-<p>foo bar</p>
+  <p>foo bar</p>
 </section>
 $endfor$

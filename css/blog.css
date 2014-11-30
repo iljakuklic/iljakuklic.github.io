@@ -17,7 +17,7 @@ h2, h3, h4, h5, h6 {
     color: rgb(61, 79, 93);
 }
 
-.post h2, .post h3 {
+article h2, article h3 {
     border-bottom: 1px dashed #89a;
 }
 
@@ -50,7 +50,7 @@ pre {
     color: #fff;
 }
 
-#sidebar a {
+#sidebar h1 a {
     color: #fff;
 }
 
@@ -75,22 +75,18 @@ pre {
     *display: inline;
     zoom: 1;
 }
-.nav-item a {
+nav a {
     background: transparent;
-    border: 2px solid rgb(176, 202, 219);
-    color: #fff;
-    margin-top: 1em;
+    color: #bcf;
     letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-size: 85%;
+    text-decoration: underline;
 }
-.nav-item a:hover,
-.nav-item a:focus {
-    border: 2px solid rgb(61, 146, 201);
+nav a:hover,
+nav a:focus {
     text-decoration: none;
 }
 
-.content-subhead {
+section.pagepart h2 {
     text-transform: uppercase;
     color: #aaa;
     border-bottom: 1px solid #eee;
@@ -107,22 +103,12 @@ pre {
 .post {
     margin-bottom: 2em;
 }
-.post-title {
+.post-item h3 {
     font-size: 1.5em;
     color: #222;
     margin-bottom: 0.2em;
 }
-.post-avatar {
-    border-radius: 50px;
-    float: right;
-    margin-left: 1em;
-}
-.post-description {
-    font-family: Georgia, "Cambria", serif;
-    color: #444;
-    line-height: 1.8em;
-}
-.post-meta {
+#content header p {
     color: #999;
     font-size: 90%;
     margin: 0;
@@ -136,10 +122,10 @@ pre {
     font-size: 80%;
 }
 
-.post-images {
+figure {
     margin: 1em 0;
 }
-.post-image-meta {
+figure figcaption {
     margin-top: -3.5em;
     margin-left: 1em;
     color: #fff;
