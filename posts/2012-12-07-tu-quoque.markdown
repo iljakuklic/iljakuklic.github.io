@@ -10,7 +10,7 @@ First paragraph goes here.
 Vestibulum leo turpis, dignissim quis ultrices sit amet, iaculis ac ligula.
 Pellentesque tristique, velit eget scelerisque scelerisque, est dolor ultrices
 arcu, quis ullamcorper justo arcu luctus mauris. Integer congue molestie nisi id
-posuere. Fusce pellentesque gravida tempus. Integer viverra tortor nec eros
+posuere. Fusce pellentesque gravida tempus. $a^2+b^2=c^2$ Integer viverra tortor nec eros
 mollis quis convallis sem laoreet. Nulla id libero ac erat varius laoreet. Proin
 sed est est. Curabitur lacinia fermentum lorem, elementum malesuada ipsum
 malesuada ut. Donec suscipit elit id leo vehicula mattis non sed leo.^[this is a footnote]
@@ -37,6 +37,7 @@ main = do
     putStrLn ("Hello, " <> name <> "!")
 ~~~~
 
+![Haskell](/images/haskell-logo.png "Fooo")
 
 ~~~~ lang-c
 #include <foo>
