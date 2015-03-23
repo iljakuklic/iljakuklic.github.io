@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/css/leaflet.css" />
+	<script src="/js/leaflet.js"></script>
+    <title>Junkyard Map</title>
+  </head>
+  <body>
+    <div id="map" style="height:100%"></div>
+	<script>
+      var map = L.map('map').setView([57.0, -4.5], 7);
+	  L.tileLayer('ttp://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+        maxZoom: 18
+      }).addTo(map);
+	</script>
+  </body>
+</html>
