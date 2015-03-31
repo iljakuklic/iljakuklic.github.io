@@ -41,7 +41,7 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    match (fromList ["about.rst", "contact.markdown"]) $ do
+    match (fromList ["about.md", "contact.md"]) $ do
         route   $ setExtension "html"
         compile $ myPandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
@@ -60,6 +60,7 @@ main = hakyll $ do
             let archiveCtx =
                     listField "posts" postCtx (return posts) <>
                     constField "title" "Archives"            <>
+                    constField "pageclass" "subpages"        <>
                     defaultContext
 
             makeItem ""
