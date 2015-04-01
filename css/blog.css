@@ -13,6 +13,10 @@ a:focus {
     text-decoration: underline;
 }
 
+ul, ol {
+	margin: .3em 0;
+}
+
 h2, h3, h4, h5, h6 {
     color: rgb(61, 79, 93);
 }
