@@ -4,10 +4,11 @@ import           Data.Monoid ((<>), mconcat)
 import           Hakyll
 import           Text.Pandoc.Options
 import           Control.Applicative
-import qualified System.Directory as Sys
-import qualified System.Process   as Sys
-import qualified System.Exit      as Sys
-import qualified Data.Time        as Sys
+import qualified Data.Time          as Sys
+import qualified System.Directory   as Sys
+import qualified System.Environment as Sys
+import qualified System.Exit        as Sys
+import qualified System.Process     as Sys
 import           System.FilePath((</>))
 
 -------------------------------------------------------------------------------
@@ -57,7 +58,9 @@ config = defaultConfiguration { deploySite = deployCmd }
 
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyllWith config $ do
+main = do
+  (action:_) <- Sys.getArgs
+  hakyllWith config $ do
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
