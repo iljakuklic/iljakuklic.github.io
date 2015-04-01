@@ -7,6 +7,7 @@ import           Control.Applicative
 import qualified System.Directory as Sys
 import qualified System.Process   as Sys
 import qualified System.Exit      as Sys
+import qualified Data.Time        as Sys
 import           System.FilePath((</>))
 
 -------------------------------------------------------------------------------
@@ -36,16 +37,19 @@ deployCmd conf = do
 	if hasDeployDir
 		then runIn deployDir "git" ["pull"]
 		else runIn rootDir "git" ["clone", gitUrl, deployDir]
-	runIn rootDir "rsync" ["--delete", "-av", siteDir, deployDir]
+	runIn rootDir "rsync" ["--delete", "-av", "--exclude=.git*", siteDir, deployDir]
+	runIn deployDir "git" ["add", "."]
+	t <- Sys.getCurrentTime
+	runIn deployDir "git" ["commit", "-m", "Update from " <> show t]
 	runIn deployDir "git" ["push"]
 	return Sys.ExitSuccess
   where
 	runIn dir cmd args = do
 		let myProc = (Sys.proc cmd args) { Sys.cwd = Just dir }
-		(status, _ , _) <- Sys.readProcessWithExitCode myProc
-		return status
+		(_, _, _, hdl) <- Sys.createProcess myProc
+		Sys.waitForProcess hdl
 	gitUrl = "git@github.com:iljakuklic/iljakuklic.github.io.git"
-	siteDir = destinationDirectory conf
+	siteDir = destinationDirectory conf </> "."
 	rootDir = providerDirectory conf
 	deployDir = rootDir </> "_deploy"
 
