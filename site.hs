@@ -59,59 +59,63 @@ config = defaultConfiguration { deploySite = deployCmd }
 --------------------------------------------------------------------------------
 main :: IO ()
 main = do
-  (action:_) <- Sys.getArgs
-  hakyllWith config $ do
-    match "images/*" $ do
-        route   idRoute
-        compile copyFileCompiler
+	(action:_) <- Sys.getArgs
+	let posts = case action of
+		"watch" -> "posts/*" .||. "drafts/*"
+		_       -> "posts/*"
 
-    match "static/**" $ do
-        route $ gsubRoute "static/" (const "")
-        compile copyFileCompiler
+	hakyllWith config $ do
+		match "images/*" $ do
+			route   idRoute
+			compile copyFileCompiler
 
-    match "css/*" $ do
-        route   idRoute
-        compile compressCssCompiler
+		match "static/**" $ do
+			route $ gsubRoute "static/" (const "")
+			compile copyFileCompiler
 
-    match (fromList ["about.md", "contact.md"]) $ do
-        route   $ setExtension "html"
-        compile $ myPandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
+		match "css/*" $ do
+			route   idRoute
+			compile compressCssCompiler
 
-    match "posts/*" $ do
-        route $ setExtension "html"
-        compile $ myPandocCompiler
-            >>= saveSnapshot "content"
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
+		match (fromList ["about.md", "contact.md"]) $ do
+			route   $ setExtension "html"
+			compile $ myPandocCompiler
+				>>= loadAndApplyTemplate "templates/default.html" defaultContext
 
-    create ["archive.html"] $ do
-        route idRoute
-        compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) <>
-                    constField "title" "Archives"            <>
-                    constField "pageclass" "subpages"        <>
-                    defaultContext
+		match posts $ do
+			route $ setExtension "html"
+			compile $ myPandocCompiler
+				>>= saveSnapshot "content"
+				>>= loadAndApplyTemplate "templates/post.html"    postCtx
+				>>= loadAndApplyTemplate "templates/default.html" postCtx
 
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
+		create ["archive.html"] $ do
+			route idRoute
+			compile $ do
+				posts <- recentFirst =<< loadAll posts
+				let archiveCtx =
+						listField "posts" postCtx (return posts) <>
+						constField "title" "Archives"            <>
+						constField "pageclass" "subpages"        <>
+						defaultContext
 
-    match "index.md" $ do
-        route $ setExtension "html"
-        compile $ do
-            posts <- take numPostsOnTitlePage <$> (recentFirst =<< loadAll "posts/*")
-            let indexCtx =
-                    listField "posts" postCtx (return posts) <>
-                    defaultContext
+				makeItem ""
+					>>= loadAndApplyTemplate "templates/archive.html" archiveCtx
+					>>= loadAndApplyTemplate "templates/default.html" archiveCtx
 
-            fmap fixupQuotes <$> myPandocCompiler
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+		match "index.md" $ do
+			route $ setExtension "html"
+			compile $ do
+				posts <- take numPostsOnTitlePage <$> (recentFirst =<< loadAll posts)
+				let indexCtx =
+						listField "posts" postCtx (return posts) <>
+						defaultContext
 
-    match "templates/*" $ compile templateCompiler
+				fmap fixupQuotes <$> myPandocCompiler
+					>>= applyAsTemplate indexCtx
+					>>= loadAndApplyTemplate "templates/default.html" indexCtx
+
+		match "templates/*" $ compile templateCompiler
 
 fixupQuotes  ('&':'q':'u':'o':'t':';':rest) = '"' : fixupQuotes  rest
 fixupQuotes  ('<':rest)                     = '<' : fixupQuotes' rest
