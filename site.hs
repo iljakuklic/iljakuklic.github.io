@@ -4,6 +4,10 @@ import           Data.Monoid ((<>), mconcat)
 import           Hakyll
 import           Text.Pandoc.Options
 import           Control.Applicative
+import qualified System.Directory as Sys
+import qualified System.Process   as Sys
+import qualified System.Exit      as Sys
+import           System.FilePath((</>))
 
 -------------------------------------------------------------------------------
 
@@ -26,9 +30,30 @@ myPandocCompiler = pandocCompilerWithTransformM pandocReadCfg pandocWriteCfg ret
 -- constants
 numPostsOnTitlePage = 3
 
+-- Hakyll config
+deployCmd conf = do
+	hasDeployDir <- Sys.doesDirectoryExist deployDir
+	if hasDeployDir
+		then runIn deployDir "git" ["pull"]
+		else runIn rootDir "git" ["clone", gitUrl, deployDir]
+	runIn rootDir "rsync" ["--delete", "-av", siteDir, deployDir]
+	runIn deployDir "git" ["push"]
+	return Sys.ExitSuccess
+  where
+	runIn dir cmd args = do
+		let myProc = (Sys.proc cmd args) { Sys.cwd = Just dir }
+		(status, _ , _) <- Sys.readProcessWithExitCode myProc
+		return status
+	gitUrl = "git@github.com:iljakuklic/iljakuklic.github.io.git"
+	siteDir = destinationDirectory conf
+	rootDir = providerDirectory conf
+	deployDir = rootDir </> "_deploy"
+
+config = defaultConfiguration { deploySite = deployCmd }
+
 --------------------------------------------------------------------------------
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith config $ do
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
