@@ -10,8 +10,8 @@ I enjoy computer science, in particular reading papers on programming language t
 poking various type systems, compiler design, GPU/accelerated computing,
 solving optimization problems and more. Sometimes I dive a bit into games programming,
 signal processing, graphics programming, or artificial intelligence.
-I am particularly interested in using concepts from maths, logic and theoretical computer science
-to solve real-world problems.
+I am particularly interested in using concepts from maths, formal logic
+and theoretical computer science to solve real-world problems.
 
 Besides that I like beer, whisky, travelling, music, economy and some more stuff that
 does not immediately come to my mind.
