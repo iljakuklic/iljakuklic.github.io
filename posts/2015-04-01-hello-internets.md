@@ -25,16 +25,17 @@ These are some of the likely areas of the future posts:
 	+ pretty much anything, really
 * travelling around Scotland (and elsewhere)
 * my music discoveries
-* an occasional rant about politics
+* an occasional rant about politics (I promise to keep this at bare minimum.)
 
-I hope to keep the range of themes relatively diverse. We shall see...
+I hope the range of themes relatively diverse to be relatively diverse. We shall see...
 
 ### What is missing
 
 Here is a list of website features I might add in the future
 as the need for them arises and/or if there is enough popular demand:
 
-* categorization of blog posts
+* blog posts in categories
+* blog archives
 * RSS feed
 * support for comments (if you want it, write a comment)
 * anything else?
