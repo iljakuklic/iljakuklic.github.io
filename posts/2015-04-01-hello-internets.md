@@ -4,7 +4,7 @@ title: Hello, Internets!
 
 
 This place is going to be a storage space for [my](/about.html) ideas and thoughts.
-Unorganized and messy. Sometimes looking more like it was written by a ranodm
+Unorganized and messy. Sometimes looking more like it was written by a random
 bad pun generator rather than a human being.
 Containing a weird mixture of small hidden gems (I hope there will be some eventually)
 and a heap of toxic and otherwise dangerous or at least utterly useless material
