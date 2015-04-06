@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Braindump Junkyard</title>
+	<link href="http://iljakuklic.github.io$url$" rel="self" />
+	<link href="http://iljakuklic.github.io" />
+$for(posts)$
+	<entry>
+		<title>$title$</title>
+		<link rel="alternate" type="text/html" href="http://iljakuklic.github.io$url$"/>
+		<updated>$timestamp$</updated>
+		<content type="html">
+			$if(teaser)$$teaser$$endif$
+			<p><a href="http:/iljakuklic.github.io$url$">Read on</a>.</p>
+		</content>
+	</entry>
+$endfor$
+</feed>
