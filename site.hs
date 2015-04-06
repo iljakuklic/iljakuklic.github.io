@@ -30,7 +30,8 @@ pandocWriteCfg = defaultHakyllWriterOptions {
 myPandocCompiler = pandocCompilerWithTransformM pandocReadCfg pandocWriteCfg return
 
 -- constants
-numPostsOnTitlePage = 3
+numPostsOnTitlePage = 5
+numPostsInFeed = 20
 
 -- Hakyll config
 deployCmd conf = do
@@ -87,7 +88,17 @@ main = do
 			compile $ myPandocCompiler
 				>>= saveSnapshot "content"
 				>>= loadAndApplyTemplate "templates/post.html"    postCtx
-				>>= loadAndApplyTemplate "templates/default.html" postCtx
+
+		create ["posts.xml"] $ do
+			route idRoute
+			compile $ do
+				posts <- take numPostsInFeed <$> (recentFirst =<< loadAll "posts/*")
+				let feedCtx =
+						listField "posts" postCtx (return posts) <>
+						constField "title" "Archives"            <>
+						defaultContext
+
+				makeItem "" >>= loadAndApplyTemplate "templates/feed.xml" feedCtx
 
 		create ["archive.html"] $ do
 			route idRoute
@@ -130,5 +141,6 @@ postCtx :: Context String
 postCtx = mconcat [
     teaserField "teaser" "content",
     dateField "date" "%e %B %Y",
+    dateField "timestamp" "%FT%T%z",
     defaultContext
   ]
