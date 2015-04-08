@@ -27,7 +27,7 @@ a static website generator written in [Haskell](http://www.haskell.org/).
 Actual conversion of posts written in markdown to HTML is performed by [Pandoc].
 All the beautiful styling is due to [Pure CSS] framework;
 all of the ugliness are my modifications to it.
-Several JavaScript libaries have been imported to enhance the browsing experience:
+Several JavaScript libraries have been imported to enhance the browsing experience:
 [prism.js] for code syntax highlighting, [MathJax] for math typesetting.
 I employed my finest [Gimp] prowess to create the *heap of brains*
 artwork you can see in the side bar.
