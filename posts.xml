@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Braindump Junkyard</title>
+	<link href="http://iljakuklic.github.io/posts.xml" rel="self" />
+	<link href="http://iljakuklic.github.io" />
+
+	<entry>
+		<title>Hello, Internets!</title>
+		<link rel="alternate" type="text/html" href="http://iljakuklic.github.io/posts/2015-04-01-hello-internets.html"/>
+		<updated>2015-04-01T00:00:00+0000</updated>
+		<content type="html">
+			<p>This place is going to be a storage space for <a href="/about.html">my</a> ideas and thoughts. Unorganized and messy. Sometimes looking more like it was written by a random bad pun generator rather than a human being. Containing a weird mixture of small hidden gems (I hope there will be some eventually) and a heap of toxic and otherwise dangerous or at least utterly useless material (pretty sure about this).</p>
+<p>Welcome to <em>Braindump Junkyard</em>.</p>
+
+			<p><a href="http:/iljakuklic.github.io/posts/2015-04-01-hello-internets.html">Read on</a>.</p>
+		</content>
+	</entry>
+
+</feed>
