@@ -28,7 +28,7 @@ Actual conversion of posts written in markdown to HTML is performed by [Pandoc].
 All the beautiful styling is due to [Pure CSS] framework;
 all of the ugliness are my modifications to it.
 Several JavaScript libraries have been imported to enhance the browsing experience:
-[prism.js] for code syntax highlighting, [MathJax] for math typesetting.
+[prism.js] for code syntax highlighting, [MathJax] for maths typesetting.
 I employed my finest [Gimp] prowess to create the *heap of brains*
 artwork you can see in the side bar.
 
@@ -40,13 +40,13 @@ To get my e-mail address, evaluate the following Haskell expression:
 map pred "jmkb/lvlmjdAhnbjm/dpn"
 ~~~~~
 
-or evaluate this for Jabber ID:
+Or evaluate this for Jabber ID:
 
 ~~~~~ .lang-haskell
 map pred "jmkb/lvlmjdAokt/ofumbc/d{"
 ~~~~~
 
-## Online presence
+## On-line presence
 
 * [iljakuklic.github.io](http://iljakuklic.github.io) (this website)
 * [GitHub](http://github.com/iljakuklic)
