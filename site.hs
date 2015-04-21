@@ -88,6 +88,7 @@ main = do
 			compile $ myPandocCompiler
 				>>= saveSnapshot "content"
 				>>= loadAndApplyTemplate "templates/post.html"    postCtx
+				>>= loadAndApplyTemplate "templates/default.html" postCtx
 
 		create ["posts.xml"] $ do
 			route idRoute
