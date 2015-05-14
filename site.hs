@@ -61,7 +61,7 @@ config = defaultConfiguration { deploySite = deployCmd }
 main :: IO ()
 main = do
 	(action:_) <- Sys.getArgs
-	let posts = case action of
+	let postPat = case action of
 		"watch" -> "posts/*" .||. "drafts/*"
 		_       -> "posts/*"
 
@@ -83,7 +83,7 @@ main = do
 			compile $ myPandocCompiler
 				>>= loadAndApplyTemplate "templates/default.html" defaultContext
 
-		match posts $ do
+		match postPat $ do
 			route $ setExtension "html"
 			compile $ myPandocCompiler
 				>>= saveSnapshot "content"
@@ -93,7 +93,7 @@ main = do
 		create ["posts.xml"] $ do
 			route idRoute
 			compile $ do
-				posts <- take numPostsInFeed <$> (recentFirst =<< loadAll "posts/*")
+				posts <- take numPostsInFeed <$> (recentFirst =<< loadAll postPat)
 				let feedCtx =
 						listField "posts" postCtx (return posts) <>
 						constField "title" "Archives"            <>
@@ -104,7 +104,7 @@ main = do
 		create ["archive.html"] $ do
 			route idRoute
 			compile $ do
-				posts <- recentFirst =<< loadAll posts
+				posts <- recentFirst =<< loadAll postPat
 				let archiveCtx =
 						listField "posts" postCtx (return posts) <>
 						constField "title" "Archives"            <>
@@ -118,7 +118,7 @@ main = do
 		match "index.md" $ do
 			route $ setExtension "html"
 			compile $ do
-				posts <- take numPostsOnTitlePage <$> (recentFirst =<< loadAll posts)
+				posts <- take numPostsOnTitlePage <$> (recentFirst =<< loadAll postPat)
 				let indexCtx =
 						listField "posts" postCtx (return posts) <>
 						defaultContext
