@@ -1,0 +1,213 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Braindump Junkyard - Non-regular types in Java</title>
+
+    <link rel="stylesheet" href="/css/pure-min.css">
+    <link rel="stylesheet" href="/css/grids-responsive-min.css">
+    <link rel="stylesheet" href="/css/prism-coy.css">
+    <link rel="stylesheet" href="/css/blog.css">
+    <link rel="icon" type="image/png" href="/images/junk-ico.png">
+	<link href="feed.xml" type="application/atom+xml" rel="alternate"
+		title="Blog posts feed for Braindump Junkyard" />
+	
+  </head>
+  <body id="layout" class="pure-g">
+    <div id="sidebar" class="pure-u-1 pure-u-md-1-4">
+      <header id="header">
+        <h1><a href="/">Brain&shy;dump Junkyard</a></h1>
+        <h2>Mostly irrelevant blog.</h2>
+
+        <nav>
+			<p>
+			| <a href="/">Blog</a> |
+			<!--<a href="/archive.html">Archive</a> |-->
+			<a href="/about.html">About</a> |
+			</p>
+        </nav>
+      </header>
+    </div>
+
+    <div id="content" class="pure-u-1 pure-u-md-3-4">
+      <section id="main">
+        <article>
+  <header>
+    <h2>Non-regular types in Java</h2>
+    <p>Posted on 10 April 2015.</p>
+  </header>
+  <p>Ironically, the first real post on this blog is about a programming language I hardly ever use. I could not think of technical reason why Java could not support non-regular types and polymorphic recursion as these two features are usually enabled by the type erasure property. But is it really the case? Googling did not seem to reveal the answer so I decided to find out myself. The short answer is yes, you can have non-regular data types in Java. The long answer is the rest of this post.</p>
+<!--more-->
+<h3 id="h-setting-up-the-scene">Setting up the scene</h3>
+<p>Before we get to the meat of non-regular types, let’s define a couple of helper classes first. Bear in mind that the samples are probably far from being idiomatic Java code. Hopefully they will be good enough to illustrate the point.</p>
+<p>The <code class="lang-java">Pair</code> class represents just a pair of things of the same type, denoted by the type argument <code class="lang-java">T</code>. To facilitate creation of instances of this class, a smart constructor <code class="lang-java">mk()</code> is provided. For example, a pair with strings “foo” and “bar” in it is constructed using <code class="lang-java">Pair.mk(&quot;foo&quot;, &quot;bar&quot;)</code>. The components of the pair can be accessed by directly using the <code class="lang-java">left</code> and <code class="lang-java">right</code> attributes. The pair class is designed as an immutable data structure: all the member variables are qualified as <code class="lang-java">final</code>.</p>
+<pre class="lang-java"><code>class Pair&lt;T&gt; {
+
+    final public T left;
+    final public T right;
+
+    public Pair(T left, T right) {
+        assert left != null &amp;&amp; right != null: &quot;Cheating!&quot;;
+        this.left = left;
+        this.right = right;
+    }
+
+    public static &lt;T&gt; Pair&lt;T&gt; mk(T left, T right) { return new Pair&lt;T&gt;(left, right); }
+};</code></pre>
+<p>Another utility class we will use is just a simple callback function interface. It is defined as follows:</p>
+<pre class="lang-java"><code>interface Proc&lt;T&gt; {
+    public void run(T x);
+};</code></pre>
+<h3 id="h-a-regular-tree">A regular tree</h3>
+<p>I’d like to illustrate non-regular types on the example of binary trees. But before diving into the non-regular types proper, let me introduce an example of a classic binary tree so we have something to compare with. In our case, data will be stored in leaves.</p>
+<p>A regular binary tree <code class="lang-java">RTree</code> is either a leaf node with data or it contains a pair of child trees. That is, for the sake of implementation simplicity, exactly one of <code class="lang-java">data</code> and <code class="lang-java">sub</code> fields is non-null in each tree node. Notice that the definition of <code class="lang-java">RTree&lt;T&gt;</code> recursively refers to <code class="lang-java">RTree&lt;T&gt;</code> (the same thing we are defining). This will be important later on as it’s the main point of difference between this definition and the definition of a non-regular binary tree.</p>
+<pre class="lang-java"><code>class RTree&lt;T&gt; {
+    final public T data;
+    final public Pair&lt;RTree&lt;T&gt;&gt; sub;
+
+    // private constructor... not to be used directly
+    private RTree(T data, Pair&lt;RTree&lt;T&gt;&gt; sub) {
+        this.data = data; this.sub = sub;
+    }</code></pre>
+<p>The constructor is defined as private to enforce some invariants. The client of this class will have to use one of two smart constructors available:</p>
+<ul>
+<li><code class="lang-java">mkLeaf()</code> constructs a leaf node with data in it. In this case, the <code class="lang-java">sub</code> field will be set to null.</li>
+<li><code class="lang-java">mkNode()</code> constructs an internal node with two subtrees. In this case, the <code class="lang-java">data</code> field will be set to null.</li>
+</ul>
+<p>The <code class="lang-java">isLeaf()</code> function just checks if this is a leaf or an internal node of the tree.</p>
+<pre class="lang-java"><code>    // leaf constructor
+    public static &lt;T&gt; RTree&lt;T&gt; mkLeaf(T data) {
+        return new RTree&lt;T&gt;(data, null);
+    }
+    // node constructor
+    public static &lt;T&gt; RTree&lt;T&gt; mkNode(RTree&lt;T&gt; left, RTree&lt;T&gt; right) {
+        return new RTree&lt;T&gt;(null, Pair.mk(left, right));
+    }
+    // check if this is a leaf node
+    public boolean isLeaf() { return sub == null; }</code></pre>
+<p>Last but not least, we have the <code class="lang-java">each()</code> procedure that executes action specified by <code class="lang-java">proc</code> for every leaf node, passing in the data associated with the node. It is implemented by a straightforward recursion on the structure of the tree.</p>
+<pre class="lang-java"><code>    public void each(Proc&lt;T&gt; proc) {
+        if (isLeaf())
+            proc.run(data);
+        else {
+            sub.left.each(proc);
+            sub.right.each(proc);
+        }
+    }
+};</code></pre>
+<p>This concludes the regular case. Hopefully no surprises so far. Let’s move on to the fun part.</p>
+<h3 id="h-a-non-regular-tree">A non-regular tree</h3>
+<p>Definition of a non-regular data structure might look like this:</p>
+<p><code class="lang-java">NTree</code> is either a leaf with data content or it contains an <code class="lang-java">NTree</code> with a pair of <code class="lang-java">T</code>s in it. Notice that the definition of <code class="lang-java">NTree&lt;T&gt;</code> now does not contain <code class="lang-java">NTree&lt;T&gt;</code> but rather <code class="lang-java">NTree&lt;Pair&lt;T&gt;&gt;</code>. This is what makes <code class="lang-java">NTree</code> a non-regular type. Again, <code class="lang-java">data</code> is only non-null for leaf nodes and <code class="lang-java">deep</code> is only non-null for intermediate nodes.</p>
+<pre class="lang-java"><code>class NTree&lt;T&gt; {
+    final public NTree&lt;Pair&lt;T&gt;&gt; deep;
+    final public T data;
+
+    // private constructor... not to be used directly
+    private NTree(T data, NTree&lt;Pair&lt;T&gt;&gt; deep) {
+        this.data = data; this.deep = deep;
+    }</code></pre>
+<p>Again, we have two smart constructors. However, they behave a bit differently this time:</p>
+<ul>
+<li><code class="lang-java">mkData()</code> just stores given data point.</li>
+<li><code class="lang-java">mkDeep()</code> turns a tree of pairs elements of type <code class="lang-java">T</code> into a tree of elements of type <code class="lang-java">T</code>. It kind of removes a level of pairing from the type, so pairs of <code class="lang-java">T</code>s can be treates as just <code class="lang-java">T</code>s inside this kind of tree.</li>
+</ul>
+<p>As before, we have a function to check for the kind of node we’re dealing with. This time, it’s called <code class="lang-java">isData()</code>.</p>
+<pre class="lang-java"><code>    // data constructor
+    public static &lt;T&gt; NTree&lt;T&gt; mkData(T data) {
+        return new NTree&lt;T&gt;(data, null);
+    }
+    // deeper tree constructor
+    public static &lt;T&gt; NTree&lt;T&gt; mkDeep(NTree&lt;Pair&lt;T&gt;&gt; deep) {
+        assert deep != null: &quot;Cheating!&quot;;
+        return new NTree&lt;T&gt;(null, deep);
+    }
+    // check if this is a data node
+    public boolean isData() { return deep == null; }</code></pre>
+<p>Iteration over nodes turns out to be slightly trickier in non-regular settings as well. The reason is that we have to turn a procedure that operates on things into one that operates on pairs of things first.</p>
+<pre class="lang-java"><code>    public void each(final Proc&lt;T&gt; proc) {
+        if (isData())
+            proc.run(data);
+        else {
+            final Proc&lt;Pair&lt;T&gt;&gt; deepProc = new Proc&lt;Pair&lt;T&gt;&gt;() {
+                public void run(Pair&lt;T&gt; sub) {
+                    proc.run(sub.left);
+                    proc.run(sub.right);
+                }
+            };
+            deep.each(deepProc);
+        }
+    }
+};</code></pre>
+<h3 id="h-what-is-ntree">What is <code>NTree</code>?</h3>
+<p>Let me point this out: we have defined two <strong>very different data structures</strong>. On one hand, we have <code class="lang-java">RTree&lt;T&gt;</code> which is just a normal binary tree as we know it. On the other hand <code class="lang-java">NTree&lt;T&gt;</code> is a weight-balanced binary tree. That implies it is able to maintain an interesting invariant: the number of its elements is statically guaranteed to be a power of two (unless you are <a href="#cheating">cheating</a>).</p>
+<p>How does that happen? <!-- First observe that the data node has either type `T`{.lang-java},
+or type `Pair<T>`{.lang-java}, or type `Pair<Pair<T>>`{.lang-java}, and so on. --></p>
+<p>Consider the following definitions:</p>
+<pre class="lang-java"><code>String             x0 = &quot;a&quot;;
+Pair&lt;String&gt;       x1 = Pair.mk(&quot;b&quot;, &quot;c&quot;);
+Pair&lt;Pair&lt;String&gt;&gt; x2 = Pair.mk(Pair.mk(&quot;d&quot;, &quot;e&quot;), Pair.mk(&quot;f&quot;, &quot;g&quot;));</code></pre>
+<p>By nesting zero or more pairs, we can only store a power-of-two number of strings.</p>
+<p>We can turn these into corresponding <code class="lang-java">NTree</code>s by applying the <code class="lang-java">mkData()</code> constructor:</p>
+<pre class="lang-java"><code>NTree&lt;String&gt;             s0 = NTree.mkData(x0);
+NTree&lt;Pair&lt;String&gt;&gt;       s1 = NTree.mkData(x1);
+NTree&lt;Pair&lt;Pair&lt;String&gt;&gt;&gt; s2 = NTree.mkData(x2);</code></pre>
+<p>Now, <code class="lang-java">s0</code>, <code class="lang-java">s1</code>, and <code class="lang-java">s2</code> have different types. We can reconcile it by applying the appropriate number of <code class="lang-java">mkDeep()</code> constructors:</p>
+<pre class="lang-java"><code>NTree&lt;String&gt; t0 = s0;
+NTree&lt;String&gt; t1 = NTree.mkDeep(s1);
+NTree&lt;String&gt; t2 = NTree.mkDeep(NTree.mkDeep(s2));</code></pre>
+<p>So anywhere a <code class="lang-java">NTree&lt;String&gt;</code> is expected, you can have a string, or a pair of strings, or a pair of pairs of strings etc. The nesting of <code class="lang-java">Pair</code> classes is what induces the weight-balanced binary tree structure. <code class="lang-java">NTree</code> can then be used sum over an arbitrary number of nesting of <code class="lang-java">Pair</code>s into one type.</p>
+<p>The output can be checked using a helper print procedure like this:</p>
+<pre class="lang-java"><code>public static void printTreeData(NTree&lt;String&gt; t) {
+    final Proc&lt;String&gt; print = new Proc&lt;String&gt;() {
+        public void run(String str) {
+            System.out.println(str);
+        }
+    };
+    t.each(print);
+    System.out.println();
+}</code></pre>
+<pre class="lang-java"><code>printTreeData(t0);
+printTreeData(t1);
+printTreeData(t2);</code></pre>
+<h4 id="h-cheating">Cheating</h4>
+<p>As we’re dealing with a language with that has a type system that is not known to be the most principled in the universe, there is a number of ways to violate the stated invariant. Here is a probably incomplete list:</p>
+<ul>
+<li>Null references. Each user-defined type in Java implicitly includes an extra value: <code class="lang-java">null</code>. Therefore a value of type <code class="lang-java">NTree&lt;String&gt;</code> is not really a balanced tree as it can also be null. I tried to make this less of an issue using <code class="lang-java">assert</code> turning it into a runtime error.</li>
+<li>Reflection and unsafe type casts.</li>
+<li>Non-termination. Having a function that promises to return a tree that does not terminate does not actually return a tree.</li>
+<li>Exceptions. Similar to the previous point.</li>
+</ul>
+<p>Use of some of these, such as casts, can be avoided. However, for example a null reference can be easily introduced by accident, making the techniques described here slightly less useful in Java setting.</p>
+<h3 id="h-alright-what-is-this-good-for">Alright, what is this good for?</h3>
+<p>Admittedly, the code shown is rather a toy example. Use of non-regular types for encoding and statically checking invariants has been demonstrated many times, mostly in functional programming setting.</p>
+<p>In particular, you can:</p>
+<ul>
+<li><a href="http://www.cs.kent.ac.uk/people/staff/smk/redblack/Typed.hs">Enforce balancedness</a> of red-black trees.</li>
+<li>Implement <a href="http://comonad.com/reader/wp-content/uploads/2010/04/Finger-Trees.pdf">Finger Trees</a>. These are virtually lists, where the first element is a pair of trees of depth 1, second element is a pair of trees of depth 2, and so on. This hard-to-maintain invariant can be expressed with non-regular types as well.</li>
+<li>Have a “triangular” list of lists, where the first element is a list of one element, second element has two elements and so on. Useful for symmetric binary relations.</li>
+</ul>
+<h3 id="h-side-note-non-regular-types-in-c">Side note: non-regular types in C++</h3>
+<p>C++ templates are usually considered to be more powerful than generics in Java. Nonetheless, in this case they fall short. If you tried to transliterate the definition of <code class="lang-java">NTree&lt;T&gt;</code> into C++, strange things would happen.</p>
+<p>Due to the lack of type erasure in C++, the compiler will attempt to generate code for <code class="lang-java">NTree&lt;Pair&lt;T&gt;&gt;</code> while generating code for <code class="lang-java">NTree&lt;T&gt;</code>. That triggers generation of code for <code class="lang-java">NTree&lt;Pair&lt;Pair&lt;T&gt;&gt;&gt;</code> and so on, sending the compiler into the oblivion of mindless code generation until it gives up by hitting an implementation-defined limit on number of nested template instantiations.</p>
+<h3 id="h-conclusion">Conclusion</h3>
+<p>By having only one run-time representation for all the instances of a polymorphic class, Java is able to support non-regular data types. This causes the type system to be able to encode non-trivial invariants one might not expect to be able to express in Java.</p>
+<p>That’s it, good night.</p>
+</article>
+
+      </section>
+      <footer id="footer">
+        <p>
+          This junkyard is run by Luk&aacute;&scaron; Kukl&iacute;nek.
+		  All the rubbish disposed here is available under the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-BY</a> license.
+          Site proudly generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+        </p>
+      </footer>
+    </div>
+
+    <script src="/js/prism.js"></script>
+    <script src="/js/prism-extras.js"></script>
+  </body>
+</html>

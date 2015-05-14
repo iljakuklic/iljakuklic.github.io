@@ -1,0 +1,109 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Braindump Junkyard - Tu Quoque</title>
+
+    <link rel="stylesheet" href="/css/pure-min.css">
+    <link rel="stylesheet" href="/css/grids-responsive-min.css">
+    <link rel="stylesheet" href="/css/prism-coy.css">
+    <link rel="stylesheet" href="/css/blog.css">
+    <link rel="icon" type="image/png" href="/images/junk-ico.png">
+	
+  </head>
+  <body id="layout" class="pure-g">
+    <div id="sidebar" class="pure-u-1 pure-u-md-1-4">
+      <header id="header">
+        <h1><a href="/">Brain&shy;dump Junkyard</a></h1>
+        <h2>Mostly irrelevant blog.</h2>
+
+        <nav>
+			<p>
+			| <a href="/">Blog</a> |
+			<!--<a href="/archive.html">Archive</a> |-->
+			<a href="/about.html">About</a> |
+			</p>
+        </nav>
+      </header>
+    </div>
+
+    <div id="content" class="pure-u-1 pure-u-md-3-4">
+      <section id="main">
+        <article>
+  <header>
+    <h2>Tu Quoque</h2>
+    <p>Posted on  7 December 2012 by Julius.</p>
+  </header>
+  <p>First paragraph goes here.</p>
+<!--more-->
+<p>Vestibulum leo turpis, dignissim quis ultrices sit amet, iaculis ac ligula. Pellentesque tristique, velit eget scelerisque scelerisque, est dolor ultrices arcu, quis ullamcorper justo arcu luctus mauris. Integer congue molestie nisi id posuere. Fusce pellentesque gravida tempus. <span class="math">\(a^2+b^2=c^2\)</span> Integer viverra tortor nec eros mollis quis convallis sem laoreet. Nulla id libero ac erat varius laoreet. Proin sed est est. Curabitur lacinia fermentum lorem, elementum malesuada ipsum malesuada ut. Donec suscipit elit id leo vehicula mattis non sed leo.<a href="#h-fn1" class="footnoteRef" id="h-fnref1"><sup>1</sup></a></p>
+<p>WTF diff <code class="lang-haskell">a -&gt; Maybe a</code>.</p>
+<pre class="lang-haskell"><code>{-# LANGUAGE NoMonomorphismRestriction #-}
+{- Regular comment HERE   foo bar baz  -}
+
+import Data.Monoid
+
+data Foo a = Yea a | Nope
+
+mapMaybe :: (a -&gt; b) -&gt; (Maybe a -&gt; Maybe b)
+mapMaybe = (&lt;$&gt;)
+
+myFunc = unsafePerformIO explode
+
+-- this is the main
+main :: IO ()
+main = do
+    name &lt;- getLine
+    putStrLn (&quot;Hello, &quot; &lt;&gt; name &lt;&gt; &quot;!&quot;)</code></pre>
+<figure>
+<img src="/images/haskell-logo.png" title="Fooo" alt="Haskell" /><figcaption>Haskell</figcaption>
+</figure>
+<pre class="lang-c"><code>#include &lt;foo&gt;
+#pragma foo
+int main(void) { return 0; }</code></pre>
+<pre class="lang-java"><code>public static abstract interface void main(string args[]) {
+    int x = 7 + 7;
+    int y = x * x;
+    for () {}
+    return;
+}</code></pre>
+<pre class="lang-git"><code> keep this
+-remove this
++add this</code></pre>
+<h3 id="h-bar">bar</h3>
+<p>Math</p>
+<p><span class="math">\[\frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} =
+1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}}
+{1+\frac{e^{-8\pi}} {1+\ldots} } } }\]</span></p>
+<p><span class="math">\(Pair^n(T) = T^{2^n}\)</span> for <span class="math">\(n\in \mathbb{N}\)</span></p>
+<p>Aenean vel libero in magna ultricies congue in a odio. Donec faucibus rutrum ornare. Fusce dictum eleifend fermentum. Vestibulum vel nibh a metus porttitor rhoncus. Pellentesque id quam neque, eget molestie arcu. Integer in elit vel neque viverra ultricies in eget massa. Nam ut convallis est. Pellentesque eros eros, sodales non vehicula et, tincidunt ut odio. Cras suscipit ultrices metus sit amet molestie. Fusce enim leo, vehicula sed sodales quis, adipiscing at ipsum.</p>
+<h3 id="h-baazy">Baazy</h3>
+<p>bleh</p>
+<h4 id="h-whatt">Whatt</h4>
+<p>Nunc tempor dignissim enim, sed tincidunt eros bibendum quis. Curabitur et dolor augue, id laoreet mi. Nulla cursus felis id dui vehicula vitae ornare lorem blandit. Cras eget dui nec odio volutpat pharetra. Fusce hendrerit justo justo, vel imperdiet enim. Vivamus elit risus, interdum ultrices accumsan eleifend, vestibulum vitae sapien. Integer bibendum ullamcorper tristique. Nulla quis odio lectus, quis eleifend augue. Integer a ligula mauris. Aenean et tempus tortor. Quisque at tortor mi. Vivamus accumsan feugiat est a blandit. Sed vitae enim ut dolor semper sodales. Duis tristique, ante et placerat elementum, nulla tellus pellentesque sapien, quis posuere velit mi eget nulla. Sed vestibulum nunc non est porttitor ut rutrum nibh semper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+<p>Nulla adipiscing ultricies lobortis. Vivamus iaculis nisl vitae tellus laoreet vitae aliquet lacus mollis. Phasellus ut lacus urna, sed sagittis ante. Etiam consectetur pretium nisl sed dignissim. Pellentesque convallis, nisl eget commodo mollis, sem magna consequat arcu, sed pretium ipsum arcu sit amet neque. Aliquam erat volutpat. Morbi sed mi sed urna vestibulum placerat vitae vel metus. Fusce ac ante at justo pharetra vehicula. Vivamus vel tortor eget augue aliquet aliquet at vel odio. Nunc venenatis, magna quis facilisis fringilla, augue tellus varius neque, in vulputate est eros ut tortor. Duis lorem neque, aliquam congue posuere id, condimentum non dui. Phasellus ut dui massa, porttitor suscipit augue. Praesent quis tellus quam, vel volutpat metus. Vivamus enim est, aliquam in imperdiet et, sagittis eu ligula. Vestibulum hendrerit placerat orci et aliquet. Cras pharetra, dolor placerat lobortis tempor, metus odio cursus ligula, et posuere lacus ligula quis dui.</p>
+<p>Donec a lectus eu nibh malesuada aliquam. Proin at metus quam, et tincidunt leo. Quisque lacus justo, scelerisque sodales pulvinar sed, dignissim ut sapien. Vivamus diam felis, adipiscing sollicitudin ultricies id, accumsan ac felis. In eu posuere ligula. Suspendisse potenti. Donec porttitor dictum dui id vehicula. Integer ante velit, congue id dictum et, adipiscing a tortor.</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="h-fn1"><p>this is a footnote<a href="#h-fnref1">↩</a></p></li>
+</ol>
+</section>
+</article>
+
+      </section>
+      <footer id="footer">
+        <p>
+          This junkyard is run by Luk&aacute;&scaron; Kukl&iacute;nek.
+		  All the rubbish disposed here is available under the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-BY</a> license.
+          Site proudly generated by <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+        </p>
+      </footer>
+    </div>
+
+    <script src="/js/prism.js"></script>
+    <script src="/js/prism-extras.js"></script>
+  </body>
+</html>
