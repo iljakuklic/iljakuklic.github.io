@@ -298,6 +298,8 @@ In particular, you can:
 * Have a "triangular" list of lists, where the first element is a list of one element,
   second element has two elements and so on.
   Useful for symmetric binary relations.
+* Enforce that de-Brujin indices are always in the correct range, i.e. variables represented by
+  the indices are in scope.
 
 ### Side note: non-regular types in C++
 
