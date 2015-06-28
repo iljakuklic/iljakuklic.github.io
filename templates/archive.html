@@ -1,4 +1,8 @@
 <section class="pagepart">
   <h2>Previous posts</h2>
-  $partial("templates/post-list.html")$
+  <ul>
+    $for(posts)$
+  	  <li><a href="$url$">$title$</a></li>
+    $endfor$
+  </ul>
 </section>
