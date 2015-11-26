@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Braindump Junkyard - Home</title>
+    <title>Braindump Junkyard - A stupid trick to marginally increase your command line productivity</title>
 
     <link rel="stylesheet" href="/css/pure-min.css">
     <link rel="stylesheet" href="/css/grids-responsive-min.css">
@@ -32,41 +32,26 @@
     </div>
 
     <div id="content" class="pure-u-1 pure-u-md-3-4">
-      <section id="main" class="subpages">
-        <h2 id="h-recent-blog-posts">Recent Blog Posts</h2>
-<p>
-<section class="post-item">
+      <section id="main">
+        <article>
   <header>
-    <h3><a href="/posts/2015-11-26-stupid-command-line-trick.html">A stupid trick to marginally increase your command line productivity</a></h3>
+    <h2>A stupid trick to marginally increase your command line productivity</h2>
     <p>Posted on 26 November 2015.</p>
   </header>
-
   <p>Navigating directories in the command line (and elsewhere) can be annoying at times. Number of tools exist to migitate the annoyance. For example, the <code class="lang-bash">cd</code> command remembers the previous path before actually changing the directory. Then, <code class="lang-bash">cd -</code> can be used to quickly go back to the previous location and efficiently alternate two most recent positions <code class="lang-bash">cd</code>-ed into.</p>
+<!--more-->
+<h3 id="h-pushd-popd">pushd, popd</h3>
+<p>This pair of commands can be used to navigate directories as well. The <code class="lang-bash">pushd</code> command accepts one argument: the directory to switch to. In addition to that, it pushes your current directory to the directory stack. Later, <code class="lang-bash">popd</code> can be used to switch back to the saved locations in FIFO order.</p>
+<p>One problem with <code class="lang-bash">pushd</code> is that you have to think about which directory to switch to in order to save the current one to the directory stack upfront. It would be useful to just save the current location, do some <code class="lang-bash">cd</code>-ing to wonder around for a bit and eventually go back using <code class="lang-bash">popd</code>.</p>
+<h3 id="h-the-trick">The trick</h3>
+<pre class=".lang-bash"><code>pushd .</code></pre>
+<p>Yep, that’s it. (Please notice the dot being passed as an argument.) Just save the current directory without switching to another one.</p>
+<p>This is one of the things that took me a while to realize but seem so obvious after the fact…</p>
+<p>&lt;rant&gt;Is it so unreasonable to expect this could be done or suggested as a hint when invoking <code class="lang-bash">pushd</code> without arguments? Any shells doing this?&lt;/rant&gt;</p>
+<h3 id="h-morale-of-the-story">Morale of the story</h3>
+<p>Don’t forget the trivial cases. They often turn out to be pretty useful.</p>
+</article>
 
-</section>
-
-<section class="post-item">
-  <header>
-    <h3><a href="/posts/2015-05-14-nonregular-types-java.html">Non-regular types in Java</a></h3>
-    <p>Posted on 14 May 2015.</p>
-  </header>
-
-  <p>Ironically, the first real post on this blog is about a programming language I hardly ever use. I could not think of technical reason why Java could not support non-regular types and polymorphic recursion as these two features are usually enabled by the type erasure property. But is it really the case? Googling did not seem to reveal the answer so I decided to find out myself. The short answer is yes, you can have non-regular data types in Java. The long answer is the rest of this post.</p>
-
-</section>
-
-<section class="post-item">
-  <header>
-    <h3><a href="/posts/2015-04-01-hello-internets.html">Hello, Internets!</a></h3>
-    <p>Posted on  1 April 2015.</p>
-  </header>
-
-  <p>This place is going to be a storage space for <a href="/about.html">my</a> ideas and thoughts. Unorganized and messy. Sometimes looking more like it was written by a random bad pun generator rather than a human being. Containing a weird mixture of small hidden gems (I hope there will be some eventually) and a heap of toxic and otherwise dangerous or at least utterly useless material (pretty sure about this).</p>
-<p>Welcome to <em>Braindump Junkyard</em>.</p>
-
-</section>
-
-</p>
       </section>
       <footer id="footer">
         <p>

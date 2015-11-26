@@ -5,6 +5,17 @@
 	<link href="http://iljakuklic.github.io" />
 
 	<entry>
+		<title>A stupid trick to marginally increase your command line productivity</title>
+		<link rel="alternate" type="text/html" href="http://iljakuklic.github.io/posts/2015-11-26-stupid-command-line-trick.html"/>
+		<updated>2015-11-26T00:00:00+0000</updated>
+		<content type="html">
+			<p>Navigating directories in the command line (and elsewhere) can be annoying at times. Number of tools exist to migitate the annoyance. For example, the <code class="lang-bash">cd</code> command remembers the previous path before actually changing the directory. Then, <code class="lang-bash">cd -</code> can be used to quickly go back to the previous location and efficiently alternate two most recent positions <code class="lang-bash">cd</code>-ed into.</p>
+
+			<p><a href="http:/iljakuklic.github.io/posts/2015-11-26-stupid-command-line-trick.html">Read on</a>.</p>
+		</content>
+	</entry>
+
+	<entry>
 		<title>Non-regular types in Java</title>
 		<link rel="alternate" type="text/html" href="http://iljakuklic.github.io/posts/2015-05-14-nonregular-types-java.html"/>
 		<updated>2015-05-14T00:00:00+0000</updated>
