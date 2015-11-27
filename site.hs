@@ -39,6 +39,7 @@ deployCmd conf = do
 	if hasDeployDir
 		then runIn deployDir "git" ["pull"]
 		else runIn rootDir "git" ["clone", gitUrl, deployDir]
+	runIn rootDir "stack" ["exec", "--", "site", "rebuild"]
 	runIn rootDir "rsync" ["--delete", "-av", "--exclude=.git*", siteDir, deployDir]
 	runIn deployDir "git" ["add", "."]
 	t <- Sys.getCurrentTime
