@@ -27,7 +27,7 @@ These are some of the likely areas of the future posts:
 * my music discoveries
 * an occasional rant about politics (I promise to keep this at bare minimum.)
 
-I hope the range of themes relatively diverse to be relatively diverse. We shall see...
+I hope to keep the range of themes relatively diverse. We shall see...
 
 ### What is missing
 
