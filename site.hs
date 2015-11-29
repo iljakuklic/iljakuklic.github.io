@@ -63,8 +63,8 @@ main :: IO ()
 main = do
     (action:_) <- Sys.getArgs
     let postPat = case action of
-        "watch" -> "posts/*" .||. "drafts/*"
-        _       -> "posts/*"
+            "watch" -> "posts/*" .||. "drafts/*"
+            _       -> "posts/*"
 
     hakyllWith config $ do
         match "images/*" $ do
